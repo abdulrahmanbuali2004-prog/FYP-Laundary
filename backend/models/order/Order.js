@@ -1,20 +1,38 @@
 const mongoose = require("mongoose");
 
+const orderItemSchema = new mongoose.Schema(
+  {
+    clothingType: {
+      type: String,
+      required: true,
+      enum: ["pants", "shorts", "hoodies", "tshirts"],
+    },
+    serviceType: {
+      type: String,
+      required: true,
+      enum: ["wash", "dry_clean", "ironing"],
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+  },
+  { _id: false }
+);
+
 const orderSchema = new mongoose.Schema(
   {
-    user: { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "User", 
-      required: true 
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
 
-    items: [
-      {
-        clothingType: { type: String, required: true },
-        serviceType: { type: String, required: true },
-        quantity: { type: Number, required: true }
-      }
-    ],
+    items: {
+      type: [orderItemSchema],
+      required: true,
+    },
 
     status: {
       type: String,
@@ -24,23 +42,26 @@ const orderSchema = new mongoose.Schema(
         "picked_up",
         "washing",
         "out_for_delivery",
-        "completed"
+        "completed",
       ],
-      default: "pending"
+      default: "pending",
     },
 
     driver: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      default: null,
     },
 
-    pickupAddress: { type: String, required: true },
-    deliveryAddress: { type: String, required: true },
+    address: {
+      type: String,
+      required: true,
+    },
 
     pickupDate: { type: Date, required: true },
     deliveryDate: { type: Date, required: true },
 
-    totalPrice: { type: Number, required: true }
+    totalPrice: { type: Number, required: true },
   },
   { timestamps: true }
 );
