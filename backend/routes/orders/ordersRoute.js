@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const secureRoute = require("../middleware/secureRoute");
-const orderController = require("../controllers/orderController");
+const secureRoute = require("../../middleware/secureRoute");
+const orderController = require("../../controllers/orderController");
 
 // Create a new order 
 router.post("/", secureRoute, orderController.createOrder);

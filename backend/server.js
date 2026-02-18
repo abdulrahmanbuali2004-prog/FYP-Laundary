@@ -6,7 +6,7 @@ const cors = require("cors");
 const connectToDB = require("./config/db");
 
 const userRoutes = require("./routes/user/userRoutes");
-const orderRoutes = require("./routes/orders/orderRoutes");
+const ordersRoute = require("./routes/orders/ordersRoute");
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ app.use(morgan("dev"));
 
 // Routes
 app.use("/user", userRoutes);
-app.use("/orders", orderRoutes);
+app.use("/orders", ordersRoute);
 
 // Health check route 
 app.get("/", (req, res) => {
